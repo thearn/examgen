@@ -2,7 +2,8 @@ Math exam generator
 ====================
 
 A Python class that can automatically generate mathematics worksheets/exams, with 
-solution keys, using Sympy and LaTeX. 
+solution keys, using Sympy and LaTeX. Meant for instructors, tutors, and student
+study groups, etc.
 
 # Requirements
 - Python 2.7 (Python 3 support coming soon)
