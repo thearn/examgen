@@ -30,7 +30,7 @@ myexam.write()
 Running this code will generate [algebra1.pdf](algebra1.pdf) and 
 [algebra1_solutions.pdf](algebra1_solutions.pdf). The LaTeX `.tex`, `.log` and
 `.aux` files will automatically be deleted after compiling. If you would rather
-save the `.tex' files for further modifications, pass the `savetex` flag when
+save the `.tex` files for further modifications, pass the `savetex` flag when
 making your exam:
 
 ```Python
