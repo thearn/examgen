@@ -45,6 +45,11 @@ def make_quadratic_eq(x="x", rhs = None):
     """
     Generates quadratic equation problem expression and
     set of solutions
+
+    x : charector for the variable to be solved for. defaults to "x".
+    rhs : value to set for the right-hand side. If not given, the 
+          right-hand side will be a randomly generated polynomial expression
+          of degree <= 2, in the same variable.
     """
     x = sympy.Symbol(x)
     c1, c2, c3 = get_coefficients(3)
