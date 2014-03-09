@@ -83,8 +83,10 @@ The `get_coefficients(n)` function is just a helper function for generating
 random coefficients, and `render(string)` is a function that places $$ charectors
 properly for LaTeX rendering.
 
+# Extending for new problem types
+
 The `exam.add_section()` method will actually accept any function that returns 
-two strings as a problem generator, in addition to a text alias. This method
+two strings as a problem generator, in addition to a built-in text alias. This method
 will also accept arguments to be passed to problem generating functions.
 This way, the code can be easily extended to new subject areas.
 
