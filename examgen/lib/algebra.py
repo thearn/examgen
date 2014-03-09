@@ -5,18 +5,29 @@ from string import ascii_lowercase
 from string import ascii_uppercase
 from copy import copy
 
+# gather up alphanumeric charectors we might want to use for variable names
 alpha = [i for i in ascii_uppercase + ascii_lowercase]
+# remove the ones that might be confusing in a problem
 alpha.remove("l")
 alpha.remove("o")
 alpha.remove("O")
 alpha.remove("I")
 alpha.remove("i")
+# gather up numerical digits we might want to use for coefficients
+# nothing special about -26 to 26, other than it matches the number of chars
+# above
 digits = range(-26,26)
+# make a list of the nums above, but with zero removed. This way we know we
+# can always guarantee selection of a non-zero digit (so the degree of a
+# polynomial in an equation is at least a certain value)
 digits_nozero = range(-26,26)
 digits_nozero.remove(0)
 
 def get_coefficients(n, exclude=["x", "X"], first_nonzero=True, var_coeffs=False, 
                         reduce=True):
+    """
+    Helper function to generate "good" coefficients for problems
+    """
     if var_coeffs:
         selection = copy(digits_nozero + alpha)
         for i in exclude:
@@ -36,6 +47,11 @@ def get_coefficients(n, exclude=["x", "X"], first_nonzero=True, var_coeffs=False
     return coeffs
 
 def render(expr, lhs=""):
+    """
+    Puts $ at the beginning and end of a latex expression.
+    lhs : if we want to render something like: $x = 3 + 5$, set the left hand 
+          side here
+    """
     left = "$"
     if lhs:
         left = "$%s =" % lhs
@@ -47,6 +63,7 @@ def make_quadratic_eq(x="x", rhs = None):
     set of solutions
 
     x : charector for the variable to be solved for. defaults to "x".
+    
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated polynomial expression
           of degree <= 2, in the same variable.
@@ -67,7 +84,17 @@ def make_quadratic_eq(x="x", rhs = None):
 
 def make_linear_eq(x="", rhs = None, var_coeffs=True):
     """
-    Generates linear equation in one variable, and its solution
+    Generates linear equation in one variable, and its solution.
+
+    x : charector for the variable to be solved for. defaults to random selection
+        from the global list `alpha`.
+
+    rhs : value to set for the right-hand side. If not given, the 
+          right-hand side will be a randomly generated linear expression
+
+    var_coeffs : sets whether we want variables as coefficients in the problem.
+                 defaults to True. Set to False if you want a problem with strictly
+                 numerical coefficients.
     """
     if not x:
         x = random.choice(alpha)
