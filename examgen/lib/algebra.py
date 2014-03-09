@@ -68,7 +68,10 @@ def make_quadratic_eq(x="x", rhs = None):
           right-hand side will be a randomly generated polynomial expression
           of degree <= 2, in the same variable.
     """
-    x = sympy.Symbol(x)
+    if isinstance(x, str):
+        x = sympy.Symbol(x)
+    elif isinstance(x, list):
+        x = sympy.Symbol(random.choice(x))
     c1, c2, c3 = get_coefficients(3)
     lhs = c1*x**2 + c2*x + c3
 
@@ -98,6 +101,9 @@ def make_linear_eq(x="", rhs = None, var_coeffs=True):
     """
     if not x:
         x = random.choice(alpha)
+    elif isinstance(x, list):
+        x = random.choice(x)
+
     exclude = [x.upper(), x.lower()]
     x = sympy.Symbol(x)
     c1, c2, c3, c4 = get_coefficients(4, var_coeffs=var_coeffs, reduce=False, 
@@ -108,8 +114,11 @@ def make_linear_eq(x="", rhs = None, var_coeffs=True):
     sols = [render(ex, x) for ex in sympy.solve(e, x)]
     return "Solve for $%s$ : %s" % (x, render(e)), sols
 
+def make_rational_simply(x="x", p=2):
+    print
+
 if __name__ == "__main__":
-    print make_linear_eq("a")
+    print make_linear_eq(["x", "y", "z"])
 
 
 

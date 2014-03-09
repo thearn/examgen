@@ -54,7 +54,7 @@ class exam(object):
         self.solutions = document(fname + "_solutions", title + " Solutions",
                                   savetex)
 
-    def add_section(self, problem_type, n, title, instructions):
+    def add_section(self, problem_type, n, title, instructions, *args, **kwargs):
         """
         Method for adding a section of problems to an exam & solutions.
         problem_type : name of the type of problem, which is mapped to a
@@ -79,7 +79,7 @@ class exam(object):
         sol_start, sol_end = section_parts(title, "")
         s_probs, s_sols = [], []
         for i in xrange(n):
-            p, sols = prob_generator()
+            p, sols = prob_generator(*args, **kwargs)
             prob = "\item " + p
             sols = "\item" + ', '.join(sols)
             s_sols.append(sols)

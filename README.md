@@ -42,8 +42,8 @@ The two problem types used above (`"Linear equations"` and `"Quadratic equations
 are aliases to linear and quadratic problem generators defined in 
 [examgen/lib/algebra.py](examgen/lib/algebra.py) (`make_linear_eq` and `make_quadratic_eq`, respectively).
 
-The are functions which
-require no arguments, and return a tuple of two LaTeX-compatible strings each 
+The are functions which may or may not require any arguments, but always return 
+a tuple of two LaTeX-compatible strings each 
 time they are called. The first string is the problem generated, the second is
 the corresponding solution.
 
@@ -79,8 +79,18 @@ random coefficients, and `render(string)` is a function that places $$ charector
 properly for LaTeX rendering.
 
 The `exam.add_section()` method will actually accept any function that returns 
-two strings as a problem generator, in addition to a text alias. 
+two strings as a problem generator, in addition to a text alias. This method
+will also accept arguments to be passed to problem generating functions.
 This way, the code can be easily extended to new subject areas.
+
+So for example, if you define a custom generating function `my_problem(arg1, arg2=val)` with
+required argument `arg1` and keyword argument `arg2`, you can add a section of
+15 problems of this type to your exam by calling:
+
+```Python
+exam..add_section(my_problem, 15, "Cool problems",
+                 "Solve these problems", arg1_val, arg2=arg2_val)
+```
 
 # Goals
 
