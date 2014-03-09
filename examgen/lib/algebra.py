@@ -93,6 +93,8 @@ def make_linear_eq(x="", rhs = None, var_coeffs=True):
 
     x : charector for the variable to be solved for. defaults to random selection
         from the global list `alpha`.
+                            OR
+        a list of possible charectors. A random selection will be made from them.
 
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated linear expression
