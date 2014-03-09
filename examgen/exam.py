@@ -105,7 +105,7 @@ if __name__ == "__main__":
     myexam.add_section("Linear equations", 20, "Linear equations",
                        "Solve the following equations for the specified variable.")
     myexam.add_section(make_quadratic_eq, 20, "Quadratic equations",
-                       "Solve the following quadratic equations.")
+                       "Solve the following quadratic equations.", ["x", "y", "z"])
     myexam.write()
 
 

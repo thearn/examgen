@@ -63,6 +63,8 @@ def make_quadratic_eq(x="x", rhs = None):
     set of solutions
 
     x : charector for the variable to be solved for. defaults to "x".
+                            OR
+        a list of possible charectors. A random selection will be made from them.
     
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated polynomial expression
@@ -118,7 +120,7 @@ def make_rational_simply(x="x", p=2):
     print
 
 if __name__ == "__main__":
-    print make_linear_eq(["x", "y", "z"])
+    print make_quadratic_eq(["x", "y", "z"])
 
 
 

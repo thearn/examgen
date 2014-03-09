@@ -54,13 +54,18 @@ def make_quadratic_eq(x="x", rhs = None):
     Generates quadratic equation problem expression and
     set of solutions
 
-    x : charector for the variable to be solved for. defaults to "x".
+    x : character for the variable to be solved for. defaults to "x".
+                            OR
+        a list of possible characters. A random selection will be made from them.
     
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated polynomial expression
           of degree <= 2, in the same variable.
     """
-    x = sympy.Symbol(x)
+    if isinstance(x, str):
+        x = sympy.Symbol(x)
+    elif isinstance(x, list):
+        x = sympy.Symbol(random.choice(x))
     c1, c2, c3 = get_coefficients(3)
     lhs = c1*x**2 + c2*x + c3
 
@@ -88,9 +93,24 @@ required argument `arg1` and keyword argument `arg2`, you can add a section of
 15 problems of this type to your exam by calling:
 
 ```Python
-exam..add_section(my_problem, 15, "Cool problems",
+myexam..add_section(my_problem, 15, "Cool problems",
                  "Solve these problems", arg1_val, arg2=arg2_val)
 ```
+
+You can use this to refine existing problem generating functions to meet your
+needs. 
+For example, if you would like to generate a 10 problem section of 
+quadratic equations that are in the variables x, y, or z, we see that 
+the function `make_quadratic_eq()` shown above will accept a list for its 
+argument `x`. So we can call:
+
+```Python
+myexam.add_section(make_quadratic_eq, 20, "Quadratic equations",
+                   "Solve the following quadratic equations.", ["x", "y", "z"])
+```
+
+and this will randomly generate the quadratic equation section with problems in the 
+variables x, y, and z.
 
 # Goals
 
