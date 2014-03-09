@@ -82,11 +82,14 @@ The `exam.add_section()` method will actually accept any function that returns
 two strings as a problem generator, in addition to a text alias. 
 This way, the code can be easily extended to new subject areas.
 
+# Goals
+
 Over time, I plan on extending built-in support for problem types from elementary
 algebra and trigonometry through calculus, differential equations, and linear
 algebra (and likely beyond). I'm also planning on extending support for generating
 exams from static sets of problems (rather than purely generated ones). This could
 be very helpful for graduate level material or qualifier exam prep.
 
-
+A no-installation GUI application (build using pyinstaller) would also be helpful
+for educators who don't have much experience in Python or CLI.
 
