@@ -37,9 +37,11 @@ making your exam:
 myexam = exam("algebra1", "Algebra 101 exam 1", savetex=True)
 ```
 
-The two problem types used above ("Linear equations" and "Quadratic equations")
+The two problem types used above (`"Linear equations"` and `"Quadratic equations"`)
 are aliases to linear and quadratic problem generators defined in 
-[examgen/lib/algebra.py](examgen/lib/algebra.py). The are functions which
+[examgen/lib/algebra.py](examgen/lib/algebra.py) (`make_linear_eq` and `make_quadratic_eq`, respectively).
+
+The are functions which
 require no arguments, and return a tuple of two LaTeX-compatible strings each 
 time they are called. The first string is the problem generated, the second is
 the corresponding solution.
@@ -52,6 +54,7 @@ def make_quadratic_eq(x="x", rhs = None):
     set of solutions
 
     x : charector for the variable to be solved for. defaults to "x".
+    
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated polynomial expression
           of degree <= 2, in the same variable.
@@ -75,10 +78,10 @@ random coefficients, and `render(string)` is a function that places $$ charector
 properly for LaTeX rendering.
 
 The `exam.add_section()` method will actually accept any function that returns 
-two strings as a problem generator. This way the code can be easily extended by
-users.
+two strings as a problem generator, in addition to a text alias. 
+This way, the code can be easily extended to new subject areas.
 
-Over time, I plan on extending built-in support for problem types from elementry
+Over time, I plan on extending built-in support for problem types from elementary
 algebra and trigonometry through calculus, differential equations, and linear
 algebra (and likely beyond). I'm also planning on extending support for generating
 exams from static sets of problems (rather than purely generated ones). This could
