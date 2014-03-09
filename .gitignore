@@ -1,0 +1,9 @@
+*.DS_store
+*.egg
+*.pyc
+*.x3g
+/build
+/dist
+*egg-info
+.coverage
+*.pdf
