@@ -1,63 +1,12 @@
 import os
 import sympy
+from sympy.parsing.sympy_parser import parse_expr
+from sympy.polys.polytools import degree
 import random
-from string import ascii_lowercase
-from string import ascii_uppercase
-from copy import copy
+from helper import alpha, digits_nozero, get_coefficients, render, shuffle
 
-# gather up alphanumeric charectors we might want to use for variable names
-alpha = [i for i in ascii_uppercase + ascii_lowercase]
-# remove the ones that might be confusing in a problem
-alpha.remove("l")
-alpha.remove("o")
-alpha.remove("O")
-alpha.remove("I")
-alpha.remove("i")
-# gather up numerical digits we might want to use for coefficients
-# nothing special about -26 to 26, other than it matches the number of chars
-# above
-digits = range(-26,26)
-# make a list of the nums above, but with zero removed. This way we know we
-# can always guarantee selection of a non-zero digit (so the degree of a
-# polynomial in an equation is at least a certain value)
-digits_nozero = range(-26,26)
-digits_nozero.remove(0)
 
-def get_coefficients(n, exclude=["x", "X"], first_nonzero=True, var_coeffs=False, 
-                        reduce=True):
-    """
-    Helper function to generate "good" coefficients for problems
-    """
-    if var_coeffs:
-        selection = copy(digits_nozero + alpha)
-        for i in exclude:
-            selection.remove(i)
-    else:
-        selection = digits_nozero
-    coeffs = []
-    for i in xrange(n):
-        c = random.choice(selection)
-        if isinstance(c, str):
-            c = sympy.Symbol(c)
-        if reduce and random.randint(0,1):
-            c = 0
-        coeffs.append(c)
-    if first_nonzero and coeffs[0] == 0:
-        coeffs[0] = random.choice(selection)
-    return coeffs
-
-def render(expr, lhs=""):
-    """
-    Puts $ at the beginning and end of a latex expression.
-    lhs : if we want to render something like: $x = 3 + 5$, set the left hand 
-          side here
-    """
-    left = "$"
-    if lhs:
-        left = "$%s =" % lhs
-    return ''.join([left, sympy.latex(expr), "$"])
-
-def make_quadratic_eq(x="x", rhs = None):
+def make_quadratic_eq(var="x", rhs = None, integer=[0, 1]):
     """
     Generates quadratic equation problem expression and
     set of solutions
@@ -69,20 +18,34 @@ def make_quadratic_eq(x="x", rhs = None):
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated polynomial expression
           of degree <= 2, in the same variable.
+
+    integer : determines whether generated problem will have integer roots or
+              not. Default is a random selection.
     """
-    if isinstance(x, str):
-        x = sympy.Symbol(x)
-    elif isinstance(x, list):
-        x = sympy.Symbol(random.choice(x))
-    c1, c2, c3 = get_coefficients(3)
-    lhs = c1*x**2 + c2*x + c3
+    if isinstance(var, str):
+        var = sympy.Symbol(var)
+    elif isinstance(var, list):
+        var = sympy.Symbol(random.choice(var))
+    if isinstance(integer, list):
+        integer = random.choice(integer)
+    if integer:
+        r1 = random.choice(digits_nozero)
+        r2 = random.choice(digits_nozero)
+        lhs = (var - r1) * (var - r2)
+        lhs = lhs.expand()
+        rhs = 0
+    else:
+        c1, c2, c3 = get_coefficients(3)
+        lhs = c1*var**2 + c2*var + c3
 
     if rhs == None:
         c4, c5, c6 = get_coefficients(3, first_nonzero=False)
-        rhs = c4*x**2 + c5*x + c6
+        rhs = c4*var**2 + c5*var + c6
     
     e = sympy.Eq(lhs, rhs)
-    sols = [render(ex, x) for ex in sympy.solve(e, x)]
+    pvar = str(var)
+    sols = ', '.join([pvar+" = " + sympy.latex(ex) for ex in sympy.solve(e, var)])
+    sols = "$$" + sols + "$$"
     if len(sols) == 0:
         return make_quadratic_eq()
     return render(e), sols
@@ -118,11 +81,47 @@ def make_linear_eq(x="", rhs = None, var_coeffs=True):
     sols = [render(ex, x) for ex in sympy.solve(e, x)]
     return "Solve for $%s$ : %s" % (x, render(e)), sols
 
-def make_rational_simply(x="x", p=2):
-    print
+def make_rational_poly_simplify(var="x"):
+    """
+    Generates a rational expression of 4 polynomials, to be simplified.
+    Example:
+        ( (x**2 + 16*x + 60) / (x**2 - 36)) / 
+        ( (x**2 - 2*x - 63) / (x**2 - 5*x - 36)
+
+    x : charector for the variable to be solved for. defaults to random selection
+        from the global list `alpha`.
+                            OR
+        a list of possible charectors. A random selection will be made from them.
+    """
+    if not var:
+        var = random.choice(alpha)
+    elif isinstance(var, list):
+        var = random.choice(var)
+
+    exclude = [var.upper(), var.lower()]
+    x = sympy.Symbol(var)
+    select = shuffle(range(-10,-1) + range(1,10))[:6]
+    e1 = sympy.prod([x - i for i in shuffle(select)[:2]]).expand()
+    e2 = sympy.prod([x - i for i in shuffle(select)[:2]]).expand()
+    e3 = sympy.prod([x - i for i in shuffle(select)[:2]]).expand()
+    e4 = sympy.prod([x - i for i in shuffle(select)[:2]]).expand()
+    L = len(set([e1, e2, e3, e4]))
+    e = ((e1/e2) / (e3 / e4))
+    s1 = ''.join(["\\frac{", sympy.latex(e1), "}", "{", sympy.latex(e2), "}"])
+    s2 = ''.join(["\\frac{", sympy.latex(e3), "}", "{", sympy.latex(e4), "}"])
+    s3 = ''.join(["$$\\frac{", s1, "}", "{", s2, "}$$"])
+    pieces = str(e.factor()).split("/")
+    try:
+        num, denom= [parse_expr(i).expand() for i in pieces]
+    except:
+        return make_rational_poly_simplify(var)
+    if len(pieces) !=2 or L < 4 or degree(num) > 2 or  degree(denom) > 2:
+        return make_rational_poly_simplify(var)
+    return s3, render(num / denom)
+
 
 if __name__ == "__main__":
-    print make_quadratic_eq(["x", "y", "z"])
+    print make_quadratic_eq(["x", "y"])
 
 
 
