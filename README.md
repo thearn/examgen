@@ -10,6 +10,11 @@ study groups, etc.
 - Sympy
 - LaTeX
 
+## Installing
+Dependencies available as Python packages can be installed with
+
+`pip install -r requirements.txt`
+
 # Quickstart Example
 
 ```Python
