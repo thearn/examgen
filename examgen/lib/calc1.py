@@ -93,9 +93,9 @@ def make_poly_ratio_limit(var="x", s=[0, 1, 2]):
     """
     Generates a ratio of two polynomials, and evaluates them at infinity.
 
-    x : charector for the variable to be solved for. defaults to "x".
+    x : character for the variable to be solved for. defaults to "x".
                             OR
-        a list of possible charectors. A random selection will be made from them.
+        a list of possible characters. A random selection will be made from them.
 
     s : selects the kind of solution
         0 : limit at infinity is zero
