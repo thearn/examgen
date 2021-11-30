@@ -3,7 +3,7 @@ import sympy
 from sympy.parsing.sympy_parser import parse_expr
 from sympy.polys.polytools import degree
 import random
-from helper import alpha, digits_nozero, get_coefficients, render, shuffle
+from .helper import alpha, digits_nozero, get_coefficients, render, shuffle
 
 def poly1(x):
     vals = sum([k*x**i for i,k in enumerate(reversed(get_coefficients(2)))])
@@ -130,4 +130,4 @@ def make_poly_ratio_limit(var="x", s=[0, 1, 2]):
     return render(e), render(s)
 
 if __name__ == "__main__":
-    print make_poly_ratio_limit(["x", "y"])
+    print(make_poly_ratio_limit(["x", "y"]))

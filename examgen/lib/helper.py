@@ -15,11 +15,11 @@ alpha.remove("i")
 # gather up numerical digits we might want to use for coefficients
 # nothing special about -26 to 26, other than it matches the number of chars
 # above
-digits = range(-26,26)
+digits = list(range(-26,26))
 # make a list of the nums above, but with zero removed. This way we know we
 # can always guarantee selection of a non-zero digit (so the degree of a
 # polynomial in an equation is at least a certain value)
-digits_nozero = range(-26,26)
+digits_nozero = list(range(-26,26))
 digits_nozero.remove(0)
 
 def shuffle(x):
@@ -35,11 +35,12 @@ def get_coefficients(n, exclude=["x", "X"], first_nonzero=True, var_coeffs=False
     if var_coeffs:
         selection = copy(digits_nozero + alpha)
         for i in exclude:
-            selection.remove(i)
+            if i in selection:
+                selection.remove(i)
     else:
         selection = digits_nozero
     coeffs = []
-    for i in xrange(n):
+    for i in range(n):
         c = random.choice(selection)
         if isinstance(c, str):
             c = sympy.Symbol(c)

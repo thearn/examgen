@@ -1,7 +1,7 @@
 import os
-from lib import doc_parts, section_parts
-from lib import make_quadratic_eq, make_linear_eq, make_rational_poly_simplify
-from lib import make_poly_ratio_limit, make_chain_rule_prob
+from .lib import doc_parts, section_parts
+from .lib import make_quadratic_eq, make_linear_eq, make_rational_poly_simplify
+from .lib import make_poly_ratio_limit, make_chain_rule_prob
 
 _problems_map = {"Quadratic equations" : make_quadratic_eq,
                  "Linear equations" : make_linear_eq,
@@ -31,7 +31,7 @@ class document(object):
         """
         main = '\n'.join(self.main)
         doc = '\n'.join([self.start, main, self.end])
-        f = open("%s.tex" % self.fname, "wb")
+        f = open("%s.tex" % self.fname, "w")
         f.write(doc)
         f.close()
         os.system("pdflatex %s.tex" % self.fname)
@@ -85,7 +85,7 @@ class worksheet(object):
         start, end = section_parts(title, instructions, cols)
         sol_start, sol_end = section_parts(title, "", cols=1)
         s_probs, s_sols = [], []
-        for i in xrange(n):
+        for i in range(n):
             p, sols = prob_generator(*args, **kwargs)
             if not isinstance(sols, list):
                 sols = [sols]

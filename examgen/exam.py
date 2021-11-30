@@ -1,9 +1,9 @@
 import os
-from lib import doc_parts, problem, exam_parts
-from lib import make_quadratic_eq, make_linear_eq, make_rational_poly_simplify
-from lib import make_poly_ratio_limit, make_chain_rule_prob, make_quotient_rule_prob
-from lib import make_horizontal_tangents, make_find_derivative_at_value
-from worksheet import document, _problems_map
+from .lib import doc_parts, problem, exam_parts
+from .lib import make_quadratic_eq, make_linear_eq, make_rational_poly_simplify
+from .lib import make_poly_ratio_limit, make_chain_rule_prob, make_quotient_rule_prob
+from .lib import make_horizontal_tangents, make_find_derivative_at_value
+from .worksheet import document, _problems_map
 
 class exam(object):
     """
