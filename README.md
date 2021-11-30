@@ -85,7 +85,7 @@ def make_quadratic_eq(x="x", rhs = None):
     return render(e), sols
 ```
 The `get_coefficients(n)` function is just a helper function for generating
-random coefficients, and `render(string)` is a function that places $$ charectors
+random coefficients, and `render(string)` is a function that places $$ characters
 properly for LaTeX rendering.
 
 # Extending for new problem types

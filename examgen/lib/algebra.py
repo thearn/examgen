@@ -11,9 +11,9 @@ def make_quadratic_eq(var="x", rhs = None, integer=[0, 1]):
     Generates quadratic equation problem expression and
     set of solutions
 
-    x : charector for the variable to be solved for. defaults to "x".
+    x : character for the variable to be solved for. defaults to "x".
                             OR
-        a list of possible charectors. A random selection will be made from them.
+        a list of possible characters. A random selection will be made from them.
     
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated polynomial expression
@@ -54,10 +54,10 @@ def make_linear_eq(x="", rhs = None, var_coeffs=True):
     """
     Generates linear equation in one variable, and its solution.
 
-    x : charector for the variable to be solved for. defaults to random selection
+    x : character for the variable to be solved for. defaults to random selection
         from the global list `alpha`.
                             OR
-        a list of possible charectors. A random selection will be made from them.
+        a list of possible characters. A random selection will be made from them.
 
     rhs : value to set for the right-hand side. If not given, the 
           right-hand side will be a randomly generated linear expression
@@ -88,10 +88,10 @@ def make_rational_poly_simplify(var="x"):
         ( (x**2 + 16*x + 60) / (x**2 - 36)) / 
         ( (x**2 - 2*x - 63) / (x**2 - 5*x - 36)
 
-    x : charector for the variable to be solved for. defaults to random selection
+    x : character for the variable to be solved for. defaults to random selection
         from the global list `alpha`.
                             OR
-        a list of possible charectors. A random selection will be made from them.
+        a list of possible characters. A random selection will be made from them.
     """
     if not var:
         var = random.choice(alpha)
